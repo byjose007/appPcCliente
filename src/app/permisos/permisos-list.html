@@ -1,0 +1,148 @@
+<div class="container-fluid gnr-main-content">
+    <div class="row content">
+        <div class="login-content">
+
+            <div class="modal fade" id="confirmar" tabindex="5" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">PERMISO</h4>
+                        </div>
+                        <div class="modal-body gnr-modal-body">
+                            <table class="gnr-form">
+                                <tr>
+                                    <td>Seleccione el Empleado</td>
+                                    <td>
+                                        <div class="input-field col s12">
+                                            <input id="country" type="text" class="validate filter-input" [(ngModel)]=query (keyup)=filter()>
+                                        </div>
+                                        <div class="suggestions" *ngIf="filteredList.length > 0">
+                                            <ul *ngFor="let item of filteredList">
+                                                <li>
+                                                    <a (click)="select(item)">{{item.nombres}}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!--tr>
+                                    <td>Nombre</td>
+                                    <td>
+                                        <select [(ngModel)]="permiso.persona">
+                                            <option *ngFor="let empleado of empleados" [ngValue]="empleado.id" class="form-control">{{ empleado.nombres }}</option>
+                                        </select>
+                                    </td>
+                                </tr-->
+                                <tr>
+                                    <td>Horario</td>
+                                    <td>
+                                        <select [(ngModel)]="permiso.horario">
+                                            <option *ngFor="let h of horarios" [ngValue]="h.id" class="form-control">{{ h.nombre }}</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Fecha</td>
+                                    <td>
+                                        <input type="date" [(ngModel)]="fechaReporte" name="fecha" />
+                                    </td>
+                                </tr>
+
+
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            <input type="button" value="Guardar" class="btn btn-success" data-dismiss="modal" id="add-producto" (click)="guardarPermiso()">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="login-fom">
+                <div class="page-header">
+           
+                    <h2> <small>PERMISOS</small></h2>
+                </div>
+                <button type="button" title="Nuevo Permiso" data-target="#confirmar" data-toggle="modal" class="btn btn-primary" (click)="nuevoPermiso()">Registrar Permiso
+                </button> <br><br>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                Perfil
+
+                            </th>
+                            <th>
+                                Cédula
+                            </th>
+                            <th>
+                                Nombres
+                            </th>
+                            <th>
+                                Apellidos
+                            </th>
+                            <th>
+                                Fecha Permiso
+                            </th>
+                            <th>
+                                Horario Permiso
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let permiso of valores">
+                            <td class="gnr-td-center"><img class="reg-imgavatar" src="{{ permiso.persona.ruta_foto }}"></td>
+                            <td>{{ permiso.persona.cedula }}</td>
+                            <td>{{ permiso.persona.nombres }}</td>
+                            <td>{{ permiso.persona.apellidos }}</td>
+                            <td>{{ permiso.fecha |date:'MM/dd/yyyy @ H:mm a' }}</td>
+                            <td>{{ permiso.horario.entrada }} a {{ permiso.horario.salida }} ( {{ permiso.horario.nombre }} )
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div class="row cls-table-control">
+                    <div class="col-sm-5">
+                        <div class="dataTables_info" id="example_info">
+                            <select class="form-control input-sm" name="cantidad" [(ngModel)]="count" (ngModelChange)="setPage(1)">
+                                <option [ngValue]="3">3</option>
+                                <option [ngValue]="5">5</option>
+                                <option [ngValue]="10">10</option>
+                                <option [ngValue]="20">20</option>
+                                <option [ngValue]="50">50</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="dataTables_paginate paging_simple_numbers" *ngIf="count < total">
+                            <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                    <a (click)="setPage(1)">Primero</a>
+                                </li>
+                                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                    <a (click)="setPage(pager.currentPage - 1)">Anterior</a>
+                                </li>
+                                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                    <a (click)="setPage(page)">{{page}}</a>
+                                </li>
+                                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                    <a (click)="setPage(pager.currentPage + 1)">Siguiente</a>
+                                </li>
+                                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                    <a (click)="setPage(pager.totalPages)">Últimos</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

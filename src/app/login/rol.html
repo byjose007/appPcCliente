@@ -1,0 +1,113 @@
+<div class="container-fluid gnr-main-content">
+  <div class="row content">
+
+    <!-- **************MODAL CREAR ROL**************** -->
+    <div class="modal fade" id="confirmarR" tabindex="5" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+            <h4 class="modal-title" id="myModalLabel">Rol</h4>
+          </div>
+          <div class="modal-body gnr-modal-body">
+            <table class="table table-hover">
+              <tr>
+                <td>Nombre del Rol</td>
+                <td><input [(ngModel)]="rol.nombre" class="form-control" /></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Selecciona</td>
+                <td>Funcionalidad</td>
+                <td>Tipo</td>
+              </tr>
+              <tr *ngFor="let item of menus">
+                <td>
+                  <input type="checkbox" [(ngModel)]="item.select" />
+                </td>
+                <td>
+                  {{ item.item.nombre }}
+                </td>
+                <td>
+                  {{ item.item.controller }}
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            <input type=" button " value="Guardar " class="btn btn-success " data-dismiss="modal" id="add-producto " (click)="guardar() ">
+          </div>          
+        </div>
+
+      </div>
+    </div>
+
+    <div class="login-content ">
+      <div class="login-fom ">
+        <div class="page-header ">
+
+          <h2> <small>ROLES</small></h2>
+        </div>
+        <button type="button" data-target="#confirmarR" data-toggle="modal" title="Crear Rol" class="btn btn-primary" (click)="nuevoRol()"> 
+          <span class="glyphicon glyphicon-plus "></span> Nuevo Rol</button> <br> <br>
+        <table class="table table-hover ">
+          <thead>
+            <tr>
+              <th>Rol</th>
+              <th>Cambiar Menu</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of valores ">
+              <td>{{ item.nombre }}</td>
+              <td>
+                <button type="button" title="Registros " class="btn btn-default" (click)="editRol(item)" data-target="#confirmarR" data-toggle="modal">                  
+                                    <span class="glyphicon glyphicon-th-list"                                     
+                                    aria-hidden="true"></span>
+                                    Menu
+                  </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row cls-table-control ">
+          <div class="col-sm-5 ">
+            <div class="dataTables_info " id="example_info ">
+              <select class="form-control input-sm " name="cantidad " [(ngModel)]="count " (ngModelChange)="setPage(1) ">
+                                <option [ngValue]="3 ">3</option>
+                                <option [ngValue]="5 ">5</option>
+                                <option [ngValue]="10 ">10</option>
+                                <option [ngValue]="20 ">20</option>
+                                <option [ngValue]="50 ">50</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-7 ">
+            <div class="dataTables_paginate paging_simple_numbers " *ngIf="count < total ">
+              <ul *ngIf="pager.pages && pager.pages.length " class="pagination ">
+                <li [ngClass]="{disabled:pager.currentPage===1 } ">
+                  <a (click)="setPage(1) ">Primero</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage===1 } ">
+                  <a (click)="setPage(pager.currentPage - 1) ">Anterior</a>
+                </li>
+                <li *ngFor="let page of pager.pages " [ngClass]="{active:pager.currentPage===page} ">
+                  <a (click)="setPage(page) ">{{page}}</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage===pager.totalPages} ">
+                  <a (click)="setPage(pager.currentPage + 1) ">Siguiente</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage===pager.totalPages} ">
+                  <a (click)="setPage(pager.totalPages) ">Últimos</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

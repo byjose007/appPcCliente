@@ -1,0 +1,110 @@
+<div class="container-fluid gnr-main-content">
+  <div class="row content">
+
+    <div class="login-content">
+      <div class="login-fom">
+        <div class="page-header">
+           
+                    <h2> <small>REPORTES DE REGISTROS</small></h2>
+                </div>
+        <table class="table table-hover">
+          <tr>
+            <td>
+              <h4>
+                Desde :
+                <input [(ngModel)]="fechaDesde" type="date" name="startDate" />
+              </h4>
+            </td>
+            <td>
+              <h4>
+                Hasta :
+                <input [(ngModel)]="fechaHasta" type="date" name="endDate" />
+              </h4>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <h4>{{ empleado.nombres }} {{ empleado.apellidos }}</h4>
+            </td>
+          </tr>
+        </table>
+        <p></p>
+        <button type="button" title="Registros" class="btn btn-default" (click)="downloadRegistros()" [disabled]="valores.length==0">                  
+                                    <span class="glyphicon glyphicon-print"                                     
+                                    aria-hidden="true"                                    
+                                    ></span>                                    
+                                    Imprimir
+                                </button>
+        <button type="button" title="Registros" class="btn btn-default" (click)="getData()">                  
+                                    <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"                                     
+                                    aria-hidden="true"></span>                                    
+                                </button>
+        <table class="table table-hover">
+          <thead>
+            <tr class="rowhighlight">
+              <th>
+                Cédula
+              </th>
+              <th>
+                Nombres
+              </th>
+              <th>
+                Apellidos
+              </th>
+              <th>
+                Fecha
+              </th>
+              <th>
+                Rostro
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let registro of valores">
+              <td>{{ registro.persona.cedula }}</td>
+              <td>{{ registro.persona.nombres }}</td>
+              <td>{{ registro.persona.apellidos }}</td>
+              <td>{{ registro.fecha |date:'MM/dd/yyyy @ H:mm a' }}</td>
+              <td class="gnr-td-center"><img class="reg-imgavatar" src="{{ registro.imagenFace }}"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="row cls-table-control">
+          <div class="col-sm-5">
+            <div class="dataTables_info" id="example_info">
+              <select class="form-control input-sm" name="cantidad" [(ngModel)]="count" (ngModelChange)="setPage(1)">
+                                <option [ngValue]="3">3</option>
+                                <option [ngValue]="5">5</option>
+                                <option [ngValue]="10">10</option>
+                                <option [ngValue]="20">20</option>
+                                <option [ngValue]="50">50</option>
+                            </select>
+            </div>
+          </div>
+          <div class="col-sm-7">
+            <div class="dataTables_paginate paging_simple_numbers" *ngIf="count < total">
+              <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(1)">Primero</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(pager.currentPage - 1)">Anterior</a>
+                </li>
+                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                  <a (click)="setPage(page)">{{page}}</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                  <a (click)="setPage(pager.currentPage + 1)">Siguiente</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                  <a (click)="setPage(pager.totalPages)">Últimos</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

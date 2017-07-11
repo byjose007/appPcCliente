@@ -1,0 +1,63 @@
+<div class="container-fluid gnr-main-content">
+  <div class="row content">
+
+   
+
+    <div class="login-content">
+      <div class="login-fom">
+        <div class="page-header">
+
+          <h2> <small>MULTAS</small></h2>
+        </div>
+    
+        <br>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>
+                Cédula
+              </th>
+              <th>
+                Nombres
+              </th>
+              <th>
+                Apellidos
+              </th>
+              <th>
+                Fecha Captura
+              </th>
+              <th>
+                Imagen
+              </th>
+              <th>
+                Rostro
+              </th>
+              <th>
+                Aplicar Multa
+              </th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let multa of valores">
+              <td>{{ multa.persona.cedula }}</td>
+              <td>{{ multa.persona.nombres }}</td>
+              <td>{{ multa.persona.apellidos }}</td>
+              <td>{{ multa.fecha |date:'MM/dd/yyyy @ H:mma'}}</td>
+              <td class="gnr-td-center">
+                <a href="#" (click)="setPathImage(multa.imagen)" data-target="#image-lr" data-toggle="modal"><img class="reg-imgavatar" src="{{ multa.imagen }}"></a>
+              </td>
+              <td class="gnr-td-center"><img class="reg-imgavatar" src="{{ multa.imagenFace }}"></td>
+              <td> <button type="button" (click)="editMulta(multa)">
+                                    <span class="glyphicon glyphicon-play-circle"                                     
+                                    aria-hidden="true"></span>                
+                Aplicar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

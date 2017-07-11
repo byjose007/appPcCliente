@@ -1,0 +1,124 @@
+<div class="container-fluid gnr-main-content">
+  <div class="row content">
+
+    <!-- **************MODAL CREAR USUARIO**************** -->
+    <div class="modal fade" id="confirmarU" tabindex="5" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <form #idForm="ngForm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+              <h4 class="modal-title" id="myModalLabel">Usuario</h4>
+            </div>
+            <div class="modal-body gnr-modal-body">
+              <table class="gnr-form">
+                <tr>
+                  <td>Usuario</td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="usuario.username" name=usuario required #usuario="ngModel" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Clave</td>
+                  <td><input class="form-control" [(ngModel)]="usuario.clave" name=clave required #clave="ngModel" [disabled]="id!=0"></td>
+                </tr>
+                <tr>
+                  <td>Confirmar Clave</td>
+                  <td><input class="form-control" [(ngModel)]="usuario.clave2" name=clave2 required #clave2="ngModel" [disabled]="id!=0">
+                    <input type="text" *ngIf="usuario.clave!=usuario.clave2" value="No coinciden las contrasenas">
+                  </td>
+                </tr>
+                <tr>
+                  <td>Rol</td>
+                  <td *ngIf="rol!=undefined">
+                    <select class="form-control" name="rol" required #rol="ngModel" [(ngModel)]="rol.id">
+                     <option *ngFor="let obj of roles" [value]="obj.id">
+                       {{ obj.nombre }}                      
+                      </option> 
+                    </select>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+              <input [disabled]="!idForm.form.valid || usuario.clave!=usuario.clave2" type="button" value="Guardar" class="btn btn-success" data-dismiss="modal" id="add-producto"
+                (click)="guardar()">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="login-content">
+      <div class="login-fom">
+         <div class="page-header">
+           
+                    <h2> <small>USUARIOS</small></h2>
+                </div>
+        
+        <button type="button" data-target="#confirmarU" data-toggle="modal" title="Crear Usuario" class="btn btn-primary" (click)="nuevoUsuario()">
+          <span class="glyphicon glyphicon-plus"></span> Registrar Usuario
+        </button> <br> <br>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Rol</th>
+              <th>Cambiar Rol</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of valores">
+              <td>{{ item.usuario.username }}</td>
+              <td>{{ item.rol.nombre }}</td>
+              <td>
+                <button type="button" title="Registros" class="btn btn-default" data-target="#confirmarU" data-toggle="modal" (click)="editUsuario(item)">                  
+                                    <span class="glyphicon glyphicon-user"                                     
+                                    aria-hidden="true"></span>
+                                    Rol
+                  </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row cls-table-control">
+          <div class="col-sm-5">
+            <div class="dataTables_info" id="example_info">
+              <select class="form-control input-sm" name="cantidad" [(ngModel)]="count" (ngModelChange)="setPage(1)">
+                                <option [ngValue]="3">3</option>
+                                <option [ngValue]="5">5</option>
+                                <option [ngValue]="10">10</option>
+                                <option [ngValue]="20">20</option>
+                                <option [ngValue]="50">50</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-7">
+            <div class="dataTables_paginate paging_simple_numbers" *ngIf="count < total">
+              <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(1)">Primero</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(pager.currentPage - 1)">Anterior</a>
+                </li>
+                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                  <a (click)="setPage(page)">{{page}}</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                  <a (click)="setPage(pager.currentPage + 1)">Siguiente</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                  <a (click)="setPage(pager.totalPages)">Últimos</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+  <h2>Datos Cliente</h2>
+  <div *ngIf="item">
+    <h3>"{{ item.nombre }}"</h3>
+    <div>
+      <label>Nombre: </label>
+      <input [(ngModel)]="item.nombre" placeholder="name"/>
+    </div>
+    <div>
+      <label>Precio: </label>
+      <input [(ngModel)]="item.apellido" placeholder="name"/>
+    </div> 
+    <div>
+      <img src="../assets/images/user.jpeg">
+    </div>   
+    <p>
+      <button (click)="gotoHeroes()">ATRAS</button>
+      <button (click)="guardar(item)">GUARDAR</button>
+    </p>
+  </div>
+

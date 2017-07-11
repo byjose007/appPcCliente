@@ -1,0 +1,104 @@
+<div class="container-fluid gnr-main-content">
+  <div class="row content">
+
+    <div class="modal fade" id="confirmar" tabindex="5" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <form #idForm="ngForm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+              <h4 class="modal-title" id="myModalLabel">Horario</h4>
+            </div>
+            <div class="modal-body gnr-modal-body">
+              <table class="gnr-form">
+                <tr>
+                  <td>Nombre</td>
+                  <td>
+                    <input class="form-control" type="text" [(ngModel)]="horario.nombre" name=nombre required #nombre="ngModel" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Hora de entrada</td>
+                  <td>
+                    <input type="time" [(ngModel)]="horario.entrada " name=entrada required #entrada="ngModel" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Seleccione hora de salida</td>
+                  <td>
+                    <input type="time" [(ngModel)]="horario.salida" name=salida required #salida="ngModel" />
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+              <input [disabled]="!idForm.form.valid" type="button" value="Guardar" class="btn btn-success" data-dismiss="modal" id="add-producto"
+                (click)="guardar()">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="login-content">
+      <div class="login-fom">
+
+        <div class="page-header">
+
+          <h2> <small>HORARIOS</small></h2>
+        </div>
+        <button type="button" data-target="#confirmar" data-toggle="modal" title="Crear Empleado" class="btn btn-primary" (click)="nuevo()">
+          <span class="glyphicon glyphicon-plus"></span> Registrar Horario
+                </button>
+        <br>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>
+                Horario
+              </th>
+
+              <th>
+                Entrada
+              </th>
+              <th>
+                salida
+              </th>
+
+              <th>
+                Editar
+              </th>
+              <th>
+                Eliminar
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let horario of items">
+              <td>{{ horario.nombre }}</td>
+              <td>{{ horario.entrada }}</td>
+              <td>{{ horario.salida }}</td>
+              <td>
+                <button type="button" title="Editar" class="btn btn-default" data-target="#confirmar" data-toggle="modal" (click)="editar(horario)">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar
+                            </button>
+              </td>
+              <td>
+                <button type="button" title="Eliminar" class="btn btn-default" data-target="#agree" data-toggle="modal" (click)="eliminarHorario(horario.id)">
+                                   <span style="cursor:pointer;" class="glyphicon glyphicon-trash"
+                                  aria-hidden="true"> </span>Eliminar</button>
+
+              </td>
+
+
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

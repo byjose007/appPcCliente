@@ -1,0 +1,39 @@
+<nav class="navbar navbar-inverse idx-main-header">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+      <div class="logo">
+        <a class="navbar-brand gnr-main-title" routerLink="/" >
+          <img class="img-logo" src="./assets/media/logo-municipio.png" alt="">
+          <!--Sistema de Vigilancia-->
+        </a>
+      </div>
+    </div>
+    <div class="collapse navbar-collapse gnr-main-menu" id="myNavbar">
+      <ul *ngIf="showMenu" class="nav navbar-nav">
+        <li *ngFor="let menu of menus" class="dropdown">
+          <a [routerLinkActive]="['activo']" href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" >
+            {{ menu.element.nombre }} <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li *ngFor="let item of menu.items"><a routerLink="{{item.accion}}" [routerLinkActive]="['activo']">{{ item.nombre }}</a></li>
+          </ul>
+        </li>
+
+      </ul>
+
+
+      <ul class="nav navbar-nav navbar-right">
+        <!--<li></li>-->
+        <li *ngIf="showMenu" (click)="salir()"><a routerLinkActive="active"> {{user.username}} <span class="glyphicon glyphicon-log-in"></span> Salir</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<block-ui [message]="defaultMessage">
+  <router-outlet></router-outlet>
+</block-ui>

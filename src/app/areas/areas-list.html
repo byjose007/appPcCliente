@@ -1,0 +1,152 @@
+<div class="container-fluid gnr-main-content">
+  <div class="row content">
+
+    <div class="modal fade" id="confirmar" tabindex="5" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <form #idForm="ngForm">
+        <div class="modal-content">         
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+            <h4 class="modal-title" id="myModalLabel">Crear Area</h4>
+          </div>
+          <div class="modal-body gnr-modal-body">
+            <table class="gnr-form">
+              <tr>
+                <td>Nombre</td>
+                <td><input class="form-control" [(ngModel)]="area.nombre"
+                    name="nombre"
+                    required
+                    #nombre="ngModel">
+                </td>
+              </tr>
+              <tr>
+                <td>Categoria</td>
+                <td>
+                  <select class="form-control" [(ngModel)]="area.categoria"
+                    name="categoria"
+                    required
+                    #categoria="ngModel">                                        
+                    <option *ngFor="let categoria of catalogoCategorias"  [ngValue]="categoria.codigo">
+                      {{ categoria.nombre }}                      
+                      </option>                                   
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>Ciudad</td>
+                <td><input class="form-control" [(ngModel)]="area.ciudad"
+                    name="ciudad"
+                    required
+                    #ciudad="ngModel">
+                </td>
+              </tr>
+              <tr>
+                <td>Estado</td>
+                <td>
+                  <select class="form-control" [(ngModel)]="area.estado"
+                    name="estado"
+                    required
+                    #estado="ngModel">                                        
+                    <option *ngFor="let estado of catalogoEstados"  [ngValue]="estado.codigo">
+                      {{ estado.nombre }}                      
+                      </option>                                   
+                  </select>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            <input [disabled]="!idForm.form.valid" data-dismiss="modal" type="button" value="Guardar" class="btn btn-success" id="add-producto" (click)="guardar()">
+          </div>          
+        </div>
+        </form>
+      </div>
+    </div>
+    
+    <div class="login-content">
+       
+      <div class="login-fom">
+         <div class="page-header">
+           
+                    <h2> <small>AREAS</small></h2>
+                </div>
+        <button (click)="nuevo()" type="button" data-target="#confirmar" data-toggle="modal" title="Crear Area" class="btn btn-primary "
+          (click)="nuevo()"><span class="glyphicon glyphicon-plus"></span> Registrar Area
+                </button>
+        <br> <br>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Categoria</th>
+              <th>Ciudad</th>
+              <th>Estado</th>
+              <th>Editar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of items">
+              <td>
+                {{ item.nombre }}
+              </td>
+              <td>
+                {{ item.categoria }}
+              </td>
+              <td>
+                {{ item.ciudad }}
+              </td>
+              <td>
+                <p *ngIf="item.estado">Activo</p>
+                <p *ngIf="!item.estado">Inactivo</p>
+              </td>
+              <td>
+
+                <button type="button" title="Editar" class="btn btn-default" data-target="#confirmar" data-toggle="modal" (click)="editar(item)"><span class="glyphicon glyphicon-edit"
+                                                                     aria-hidden="true"></span>
+                            </button>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row cls-table-control">
+          <div class="col-sm-5">
+            <div class="dataTables_info" id="example_info">
+              <select class="form-control input-sm" name="cantidad" [(ngModel)]="count" (ngModelChange)="setPage(1)">
+                                <option [ngValue]="3">3</option>
+                                <option [ngValue]="5">5</option>
+                                <option [ngValue]="10">10</option>
+                                <option [ngValue]="20">20</option>
+                                <option [ngValue]="50">50</option>
+                            </select>
+            </div>
+          </div>
+          <div class="col-sm-7">
+            <div class="dataTables_paginate paging_simple_numbers" *ngIf="count < total">
+              <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(1)">Primero</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(pager.currentPage - 1)">Anterior</a>
+                </li>
+                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                  <a (click)="setPage(page)">{{page}}</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                  <a (click)="setPage(pager.currentPage + 1)">Siguiente</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                  <a (click)="setPage(pager.totalPages)">Últimos</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

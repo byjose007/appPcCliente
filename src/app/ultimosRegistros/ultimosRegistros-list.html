@@ -1,0 +1,133 @@
+<div class="container-fluid gnr-main-content">
+  <div class="row content">
+    <div class="modal fade" id="confirmar" tabindex="5" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+            <h4 class="modal-title" id="myModalLabel">Crear Empleado</h4>
+          </div>
+          <div class="modal-body gnr-modal-body">
+            <table class="gnr-form">
+              <tr>
+                <td>Nombre</td>
+                <td><input class="form-control" [(ngModel)]="nombre"></td>
+              </tr>
+              <tr>
+                <td>Categoria</td>
+                <td><input class="form-control" [(ngModel)]="categoria"></td>
+              </tr>
+              <tr>
+                <td>Ciudad</td>
+                <td><input class="form-control" [(ngModel)]="ciudad"></td>
+              </tr>
+              <tr>
+                <td>Estado</td>
+                <td>
+                  <!--select class="form-control" [(ngModel)]="estado">
+                                        {% for estado in estados %}
+                                            <option [ngValue]="[{ estado.0 }]">[{ estado.1 }]</option>
+                                        {% endfor %}
+                  </select-->
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            <input type="button" value="Guardar" class="btn btn-default" id="add-producto" (click)="guardar()">
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="login-content">
+      <div class="login-fom">
+
+         <div class="page-header">
+           
+                    <h2> <small>ÚLTIMOS REGISTROS</small></h2>
+                </div>
+        <button class="btn btn-default" (click)="download()">download
+        </button>
+        <button type="button" data-target="#confirmar" data-toggle="modal" title="Crear Empleado" class="btn btn-default" (click)="nuevo()">Crear Empleado
+                </button>
+        <br>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>
+                Cedula
+              </th>
+              <th>
+                Nombres
+              </th>
+              <th>
+                Apellidos
+              </th>
+              <th>
+                Fecha
+              </th>
+              <th>
+                Imagen
+              </th>
+              <th>
+                Rostro
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let registro of valores">
+              <td>{{ registro.persona.cedula }}</td>
+              <td>{{ registro.persona.nombres }}</td>
+              <td>{{ registro.persona.apellidos }}</td>
+              <td>{{ registro.fecha |date:'MM/dd/yyyy @ H:mm a' }}</td>
+              <td class="gnr-td-center">
+                <a href="#" (click)="setPathImage(registro.imagen)" data-target="#image-lr" data-toggle="modal"><img class="reg-imgavatar" src="{{ registro.imagen }}"></a>
+              </td>
+              <td class="gnr-td-center"><img class="reg-imgavatar" src="{{ registro.imagenFace }}"></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row cls-table-control">
+          <div class="col-sm-5">
+            <div class="dataTables_info" id="example_info">
+              <select class="form-control input-sm" name="cantidad" [(ngModel)]="count" (ngModelChange)="setPage(1)">
+                                <option [ngValue]="3">3</option>
+                                <option [ngValue]="5">5</option>
+                                <option [ngValue]="10">10</option>
+                                <option [ngValue]="20">20</option>
+                                <option [ngValue]="50">50</option>
+                            </select>
+            </div>
+          </div>
+          <div class="col-sm-7">
+            <div class="dataTables_paginate paging_simple_numbers" *ngIf="count < total">
+              <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(1)">Primero</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(pager.currentPage - 1)">Anterior</a>
+                </li>
+                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                  <a (click)="setPage(page)">{{page}}</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                  <a (click)="setPage(pager.currentPage + 1)">Siguiente</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                  <a (click)="setPage(pager.totalPages)">Últimos</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

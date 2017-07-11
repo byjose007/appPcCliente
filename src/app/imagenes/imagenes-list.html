@@ -1,0 +1,126 @@
+<div class="container-fluid gnr-main-content">
+
+
+    <div id="myCarousel" class="img-slider-cont carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators img-indicators">
+            <ng-container *ngFor="let image of fotos">
+                <li data-target="#myCarousel" class="active"></li>
+            </ng-container>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <ng-container *ngFor="let image of fotos">
+                <div *ngIf="fotos[0]==image" class="item active">
+                    <img class="img-slide-stl" src="{{image.imagen}}">
+                </div>
+                <div *ngIf="fotos[0]!=image" class="item">
+                    <img class="img-slide-stl" src="{{image.imagen}}">
+                </div>
+            </ng-container>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Anterior</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Siguiente</span>
+        </a>
+    </div>
+
+
+    <div class="row content">
+        <!--<div class="col-sm-3 sidenav gnr-left-menu">
+        </div>
+        <div class="col-sm-9 gnr-content">-->
+        <div class="login-content img-content">
+            <div class="login-fom">
+                <div class="page-header">
+           
+                    <h2> <small>PERSONAL RECONOCIDO</small></h2>
+                </div>
+               
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                Cédula
+                            </th>
+                            <th>
+                                Nombres
+                            </th>
+                            <th>
+                                Apellidos
+                            </th>
+                            <th>
+                                Teléfono
+                            </th>                           
+                            <th>
+                                Foto
+                            </th>
+                                <th>
+                                Imágenes de aprendizage
+                            </th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let persona of empleados">
+                            <td>{{ persona.cedula }}</td>
+                            <td>{{ persona.nombres }}</td>
+                            <td>{{ persona.apellidos }}</td>
+                            <td>{{ persona.telefono }}</td>                          
+                            <td class="img-cell-avatar"><img class="img-avatar" src="{{ persona.ruta_foto }}"></td>
+
+                            <button type="button" title="fotos" class="btn btn-default" (click)="buscarEmpleado(persona.id)">
+                <span  class="glyphicon glyphicon-camera"
+                  aria-hidden="true">
+
+                </span>
+                </button>
+                            <!--<td><a class="employ" (click)="buscarEmpleado(persona.id)">Buscar</a></td>-->
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row cls-table-control">
+                    <div class="col-sm-5">
+                        <div class="dataTables_info" id="example_info">
+                            <select class="form-control input-sm" name="cantidad" [(ngModel)]="count" (ngModelChange)="setPage(1)">
+                                <option [ngValue]="3">3</option>
+                                <option [ngValue]="5">5</option>
+                                <option [ngValue]="10">10</option>
+                                <option [ngValue]="20">20</option>
+                                <option [ngValue]="50">50</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="dataTables_paginate paging_simple_numbers" *ngIf="count < total">
+                            <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                    <a (click)="setPage(1)">Primero</a>
+                                </li>
+                                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                    <a (click)="setPage(pager.currentPage - 1)">Anterior</a>
+                                </li>
+                                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                    <a (click)="setPage(page)">{{page}}</a>
+                                </li>
+                                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                    <a (click)="setPage(pager.currentPage + 1)">Siguiente</a>
+                                </li>
+                                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                    <a (click)="setPage(pager.totalPages)">Últimos</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

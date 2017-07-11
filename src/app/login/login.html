@@ -1,0 +1,40 @@
+<div class="container-fluid gnr-main-content">
+    <div class="row content">
+        <div class="login-content_principal">
+
+            <div class="login-fom">
+                <div class="page-header">
+                    <h2> <small>Login</small></h2>
+                </div>
+               
+
+                <p *ngIf="!error" class="list-group-item list-group-item-info"> Ingrese sus datos</p>
+                <p *ngIf="error" class="list-group-item list-group-item-danger">{{ ngVariable }}</p>
+
+
+
+            
+                <br>
+                <table class="table table-hover">
+                    <form novalidate name="myForm" (ngSubmit)="ingresar()" method="post" class="login-form" #postForm="ngForm">
+                        <div class="form-group">
+                            <label class="sr-only" for="form-username">Usuario</label>
+                            <input type="text" name="username" placeholder="Usuario..." class="form-username form-control" required [(ngModel)]="username"
+                                id="form-username">
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="form-password">Clave</label>
+                            <input type="password" name="password" placeholder="Clave..." class="form-password form-control" required [(ngModel)]="password"
+                                id="form-password">
+                        </div>
+                        <!--<a href="#">¿Has olvidado tu contraseña?</a>-->
+                        <br>
+                        <a><button type="submit" [disabled]="!postForm.form.valid" class="btn">Ingresar</button></a>
+
+                    </form>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

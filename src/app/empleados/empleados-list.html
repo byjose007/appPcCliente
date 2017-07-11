@@ -1,0 +1,296 @@
+<div class="container-fluid gnr-main-content">
+  <div class="row content">
+    <!-- **************MODAL CREAR EMPLEADO**************** -->
+    <div class="modal fade" id="confirmar" tabindex="5" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+            <h4 class="modal-title" id="myModalLabel">Crear Empleado</h4>
+          </div>
+          <div class="emp-modal-avatar">
+            <div class="emp-modal-radio">
+              <img class="emp-imgavatar" src="{{ empleado != undefined ? empleado.ruta_foto: '' }}">
+            </div>
+          </div>
+          <div class="modal-body gnr-modal-body">
+            <table class="gnr-form">
+
+              <form novalidate class="login-form" #postForm="ngForm">
+
+                <tr>
+                  <td>Cédula</td>
+                  <td>
+                    <!--pattern="[0-9]{10}"   pattern="[A-Za-z]*"-->
+                    <input class="form-control" type="number" [(ngModel)]="empleado.cedula" name="cedula" required #cedula="ngModel">
+                  </td>
+                </tr>
+
+                <tr *ngIf="!cedula.valid && cedula.touched">
+                  <td></td>
+                  <td> <span style="color: firebrick">Este campo es obligatorio</span></td>
+                </tr>
+
+                <tr>
+                  <td>Nombres</td>
+                  <td>
+                    <input type="text" class="form-control" [(ngModel)]="empleado.nombres" name="nombre" required #nombre="ngModel">
+                  </td>
+                </tr>
+                <tr *ngIf="!nombre.valid && nombre.touched">
+                  <td></td>
+                  <td> <span style="color: firebrick">Este campo es obligatorio</span></td>
+                </tr>
+
+
+                <tr>
+                  <td>Apellidos</td>
+                  <td><input type="text" class="form-control" [(ngModel)]="empleado.apellidos" name="apellidos" required #apellidos="ngModel"></td>
+                </tr>
+                <tr *ngIf="!apellidos.valid && apellidos.touched">
+                  <td></td>
+                  <td> <span style="color: firebrick">Este campo es obligatorio</span></td>
+                </tr>
+
+                <tr>
+                  <td>Género</td>
+                  <td>
+                    <select class="form-control" [(ngModel)]="empleado.genero" name="genero" required #genero="ngModel">
+
+                     <option *ngFor="let genero of generos"  [ngValue]="genero">
+                       {{ genero }}                      
+                      </option> 
+                    </select>
+                  </td>
+                </tr>
+
+                <tr *ngIf="!genero.valid && genero.touched">
+                  <td></td>
+                  <td> <span style="color: firebrick">Este campo es obligatorio</span></td>
+                </tr>
+
+                <tr>
+                  <td>Teléfono</td>
+                  <td><input type="number" class="form-control" [(ngModel)]="empleado.telefono" name="telefono" required #telefono="ngModel"></td>
+                </tr>
+                <tr *ngIf="!telefono.valid && telefono.touched">
+                  <td></td>
+                  <td> <span style="color: firebrick">Este campo es obligatorio</span></td>
+                </tr>
+
+                <tr>
+                  <td>Area</td>
+                  <td>
+                    <select class="form-control" [(ngModel)]="empleado.area" name="area" required #area="ngModel">                                       
+                      <option *ngFor="let area of areas" [ngValue]="area.id">{{area.nombre}}</option>                                      
+                    </select>
+                  </td>
+                </tr>
+
+                
+                <tr>
+                  <td>Departamento</td>
+                  <td><input type="text" class="form-control" [(ngModel)]="empleado.departamento" name="departamento" required #departamento="ngModel"></td>
+                </tr>
+                <tr *ngIf="!departamento.valid && departamento.touched">
+                  <td></td>
+                  <td> <span style="color: firebrick">Este campo es obligatorio</span></td>
+                </tr>
+
+                <tr *ngIf="!area.valid && area.touched">
+                  <td></td>
+                  <td> <span style="color: firebrick">Este campo es obligatorio</span></td>
+                </tr>
+
+                <tr>
+                  <td>Fecha nacimiento</td>
+                  <td><input type="date" useValueAsDate class="form-control" [(ngModel)]="empleado.fecha_nacimiento" name="fecha" required
+                      #fecha="ngModel"></td>
+                </tr>
+                <tr *ngIf="!fecha.valid && fecha.touched">
+                  <td></td>
+                  <td> <span style="color: firebrick">Este campo es obligatorio</span></td>
+                </tr>
+
+                <tr>
+                  <td>Foto</td>
+                  <td><input  type="file" class="form-control" [(ngModel)]="empleado.ruta_foto" name="foto" id="foto" (change)="onUpload($event)">
+                  </td>
+                </tr>
+
+                <!--<tr *ngIf="!foto.valid && foto.touched">
+                  <td></td>
+                  <td> <span style="color: firebrick">Este campo es obligatorio</span></td>
+                </tr>-->
+
+              </form>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            <input type="button" value="Guardar" [disabled]="!postForm.form.valid" class="btn btn-success" data-dismiss="modal" id="add-producto"
+              (click)="guardar()">
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- **************HORARIOS MODAL**************** -->
+    <div class="modal fade" id="horario" tabindex="5" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+            <h4 class="modal-title" id="myModalLabel">Horarios de trabajo</h4>
+          </div>
+          <div class="emp-modal-avatar">
+            <div class="emp-modal-radio">
+              <img class="emp-imgavatar" src="{{ empleado != undefined ? empleado.ruta_foto: '' }}">
+            </div>
+          </div>
+          <div class="modal-body gnr-modal-body">
+            <table class="gnr-form">
+              <tr>
+                <td>
+                  <ul>
+                    <li *ngFor="let horario of horariosAll; let i=index" style="list-style-type:none">
+                      <input type="checkbox" value="{{ horario.h.id }}" [checked]="horario.select" (change)="editHorario(horario)">                      {{ horario.h.nombre }}: ({{ horario.h.entrada }}) - ({{ horario.h.salida }})
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cancelar()">
+                            Cancelar
+                        </button>
+            <input type="button" value="Guardar" class="btn btn-success" data-dismiss="modal" id="add-producto" (click)="guardarHorariosAll()">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ***********MODAL ******************* -->
+
+    <div class="login-content">
+
+      <div class="login-fom">
+        <div class="page-header">
+
+          <h2> <small>EMPLEADOS</small></h2>
+        </div>
+        <button type="button" data-target="#confirmar" data-toggle="modal" title="Crear Empleado" class="btn btn-primary" (click)="nuevo()">
+          <span class="glyphicon glyphicon-plus"></span> Registrar Empleado</button>
+        <input type="text" placeholder="Buscar por nombre" [(ngModel)]="query" (keyup)="filter()" />
+        <br><br><br>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+
+              <th>Cédula</th>
+              <th>Nombres</th>
+              <th>Apellidos</th>
+              <th>Telefono</th>
+              <th>Area</th>
+              <th>departamento</th>
+              <th>Foto</th>
+              <th>Editar</th>
+              <th>Horario</th>
+              <th>Registros</th>
+              <th>Multas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of valores">
+
+              <td>{{ item.cedula }}</td>
+              <td>{{ item.nombres }}</td>
+              <td>{{ item.apellidos }}</td>
+              <td>{{ item.telefono }}</td>
+              <td>{{ item.area }}</td>
+              <td>{{ item.departamento }}</td>
+              <td><img class="reg-imgavatar" src="{{ item != undefined ? item.ruta_foto: '' }}"></td>
+
+              <td>
+                <button type="button" title="Editar" class="btn btn-default" data-target="#confirmar" data-toggle="modal" (click)="editarEmpleado(item)"><span class="glyphicon glyphicon-edit"
+                                                                     aria-hidden="true"></span>
+                            </button>
+
+              </td>
+              <td>
+                <button type="button" title="horario" class="btn btn-default" data-target="#horario" data-toggle="modal" (click)="editarHorario(item)">
+                <span  class="glyphicon glyphicon-time"
+                  aria-hidden="true">
+
+                </span>
+                </button>
+              </td>
+              <td>
+                <!--a href="{{ 'reportes_pdf/'}}{{item.id}}/registros/" target="_blank"-->
+                <button type="button" title="Registros" class="btn btn-default" (click)="reporteRegistros(item)">                  
+                                    <span class="glyphicon glyphicon-facetime-video"                                     
+                                    aria-hidden="true"></span>
+                                    Registros
+                                </button>
+                <!--/a-->
+              </td>
+
+              <td>
+                <!--a href="{{ 'reportes_pdf/'}}{{item.id}}/multas/" target="_blank">
+                  <button type="button" title="Multas" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Multas
+                                </button>
+                </a-->
+                <button type="button" title="Registros" class="btn btn-default" (click)="reporteMultas(item)">                  
+                                    <span class="glyphicon glyphicon-eye-open"                                     
+                                    aria-hidden="true"></span>
+                                    Multas
+                                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row cls-table-control">
+          <div class="col-sm-5">
+            <div class="dataTables_info" id="example_info">
+              <select class="form-control input-sm" name="cantidad" [(ngModel)]="count" (ngModelChange)="setPage(1)">
+                                <option [ngValue]="3">3</option>
+                                <option [ngValue]="5">5</option>
+                                <option [ngValue]="10">10</option>
+                                <option [ngValue]="20">20</option>
+                                <option [ngValue]="50">50</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-7">
+            <div class="dataTables_paginate paging_simple_numbers" *ngIf="count < total">
+              <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(1)">Primero</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(pager.currentPage - 1)">Anterior</a>
+                </li>
+                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                  <a (click)="setPage(page)">{{page}}</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                  <a (click)="setPage(pager.currentPage + 1)">Siguiente</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                  <a (click)="setPage(pager.totalPages)">Últimos</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
